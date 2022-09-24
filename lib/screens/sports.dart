@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:friverpod/dbservices/dbservices.dart';
+import 'package:friverpod/models/todo.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SportsScreen extends HookConsumerWidget {
@@ -6,8 +8,15 @@ class SportsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
-      body: Text('data'),
-    );
+    NotesDb notes = NotesDb();
+    Future<List<Todo>> getData() async {
+      return await notes.getUserDetails();
+    }
+
+    return Scaffold(
+        body: RefreshIndicator(
+      onRefresh: (() => getData()),
+      child: const Text('dat'),
+    ));
   }
 }
